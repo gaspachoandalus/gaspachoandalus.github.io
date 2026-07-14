@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gaspachoandalus</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #f9f9f7;
+      --text: #1a1a1a;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --accent: #111827;
+      --card-bg: #ffffff;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 4rem 1.5rem;
+    }
+
+    main {
+      width: 100%;
+      max-width: 680px;
+    }
+
+    /* ── Header ── */
+    header {
+      margin-bottom: 3.5rem;
+    }
+
+    header h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--accent);
+    }
+
+    header p {
+      margin-top: 0.5rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    header .links {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    header .links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: color 0.15s;
+    }
+
+    header .links a:hover {
+      color: var(--accent);
+    }
+
+    /* ── Section title ── */
+    .section-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── Repo list ── */
+    .repo-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background-color: var(--border);
+    }
+
+    .repo-item {
+      background-color: var(--card-bg);
+      padding: 1.25rem 1.5rem;
+    }
+
+    .repo-item a {
+      text-decoration: none;
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 0.975rem;
+      transition: color 0.15s;
+    }
+
+    .repo-item a:hover {
+      color: #2563eb;
+    }
+
+    .repo-desc {
+      margin-top: 0.3rem;
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+
+    .repo-meta {
+      margin-top: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .lang-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #9ca3af;
+      flex-shrink: 0;
+    }
+
+    .lang-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .repo-loading,
+    .repo-error {
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding: 1.25rem 0;
+    }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 4rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>gaspachoandalus</h1>
+      <p>Software developer.</p>
+      <div class="links">
+        <a href="https://github.com/gaspachoandalus" target="_blank" rel="noopener noreferrer">
+          <!-- GitHub icon -->
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+              0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
+              -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66
+              .07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15
+              -.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0
+              1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82
+              1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01
+              1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+    </header>
+
+    <section>
+      <p class="section-title">Public repositories</p>
+      <p class="repo-loading" id="loading">Loading…</p>
+      <ul class="repo-list" id="repo-list" hidden></ul>
+      <p class="repo-error" id="error" hidden>Could not load repositories.</p>
+    </section>
+
+    <footer>
+      <p>&copy; <span id="year"></span> gaspachoandalus</p>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const LANG_COLORS = {
+      JavaScript: '#f1e05a',
+      TypeScript: '#3178c6',
+      Python:     '#3572a5',
+      HTML:       '#e34c26',
+      CSS:        '#563d7c',
+      Shell:      '#89e051',
+      Go:         '#00add8',
+      Rust:       '#dea584',
+      C:          '#555555',
+      'C++':      '#f34b7d',
+      Ruby:       '#701516',
+      Java:       '#b07219',
+    };
+
+    async function loadRepos() {
+      const loading = document.getElementById('loading');
+      const list    = document.getElementById('repo-list');
+      const error   = document.getElementById('error');
+
+      try {
+        const res = await fetch(
+          'https://api.github.com/users/gaspachoandalus/repos?type=public&sort=updated&per_page=100'
+        );
+        if (!res.ok) throw new Error('API error');
+
+        const repos = await res.json();
+        const filtered = repos.filter(r => r.name !== 'gaspachoandalus.github.io' && !r.fork);
+
+        if (filtered.length === 0) {
+          loading.textContent = 'No public repositories yet.';
+          return;
+        }
+
+        filtered.forEach(repo => {
+          const li = document.createElement('li');
+          li.className = 'repo-item';
+
+          const color = repo.language ? (LANG_COLORS[repo.language] || '#9ca3af') : null;
+          const langHtml = repo.language
+            ? `<span class="lang-dot" style="background-color:${color}" title="${repo.language}"></span>
+               <span class="lang-label">${repo.language}</span>`
+            : '';
+
+          li.innerHTML = `
+            <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer">${repo.name}</a>
+            ${repo.description ? `<p class="repo-desc">${repo.description}</p>` : ''}
+            ${langHtml ? `<div class="repo-meta">${langHtml}</div>` : ''}
+          `;
+          list.appendChild(li);
+        });
+
+        loading.hidden = true;
+        list.hidden = false;
+      } catch (e) {
+        loading.hidden = true;
+        error.hidden = false;
+      }
+    }
+
+    loadRepos();
+  </script>
+</body>
+</html>
