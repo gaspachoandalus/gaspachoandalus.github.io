@@ -238,17 +238,39 @@
           const li = document.createElement('li');
           li.className = 'repo-item';
 
-          const color = repo.language ? (LANG_COLORS[repo.language] || '#9ca3af') : null;
-          const langHtml = repo.language
-            ? `<span class="lang-dot" style="background-color:${color}" title="${repo.language}"></span>
-               <span class="lang-label">${repo.language}</span>`
-            : '';
+          const a = document.createElement('a');
+          a.href = repo.html_url;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.textContent = repo.name;
+          li.appendChild(a);
 
-          li.innerHTML = `
-            <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer">${repo.name}</a>
-            ${repo.description ? `<p class="repo-desc">${repo.description}</p>` : ''}
-            ${langHtml ? `<div class="repo-meta">${langHtml}</div>` : ''}
-          `;
+          if (repo.description) {
+            const p = document.createElement('p');
+            p.className = 'repo-desc';
+            p.textContent = repo.description;
+            li.appendChild(p);
+          }
+
+          if (repo.language) {
+            const color = LANG_COLORS[repo.language] || '#9ca3af';
+            const meta = document.createElement('div');
+            meta.className = 'repo-meta';
+
+            const dot = document.createElement('span');
+            dot.className = 'lang-dot';
+            dot.style.backgroundColor = color;
+            dot.title = repo.language;
+
+            const label = document.createElement('span');
+            label.className = 'lang-label';
+            label.textContent = repo.language;
+
+            meta.appendChild(dot);
+            meta.appendChild(label);
+            li.appendChild(meta);
+          }
+
           list.appendChild(li);
         });
 
