@@ -147,13 +147,6 @@
       color: var(--muted);
     }
 
-    .repo-loading,
-    .repo-error {
-      color: var(--muted);
-      font-size: 0.9rem;
-      padding: 1.25rem 0;
-    }
-
     /* ── Footer ── */
     footer {
       margin-top: 4rem;
@@ -187,9 +180,24 @@
 
     <section>
       <p class="section-title">Public repositories</p>
-      <p class="repo-loading" id="loading">Loading…</p>
-      <ul class="repo-list" id="repo-list" hidden></ul>
-      <p class="repo-error" id="error" hidden>Could not load repositories.</p>
+      <ul class="repo-list">
+        <li class="repo-item">
+          <a href="https://github.com/gaspachoandalus/flappy-bird-nn-ai" target="_blank" rel="noopener noreferrer">flappy-bird-nn-ai</a>
+          <p class="repo-desc">AI learns to play flappy bird with a basic neural network and a genetic algorithm</p>
+          <div class="repo-meta">
+            <span class="lang-dot" style="background-color:#3178c6" title="TypeScript"></span>
+            <span class="lang-label">TypeScript</span>
+          </div>
+        </li>
+        <li class="repo-item">
+          <a href="https://github.com/gaspachoandalus/skills" target="_blank" rel="noopener noreferrer">skills</a>
+          <p class="repo-desc">skills for ai agent</p>
+          <div class="repo-meta">
+            <span class="lang-dot" style="background-color:#3572a5" title="Python"></span>
+            <span class="lang-label">Python</span>
+          </div>
+        </li>
+      </ul>
     </section>
 
     <footer>
@@ -198,94 +206,7 @@
   </main>
 
   <script>
-    const USERNAME = 'gaspachoandalus';
-
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    const LANG_COLOR_FALLBACK = '#9ca3af';
-    const LANG_COLORS = {
-      JavaScript: '#f1e05a',
-      TypeScript: '#3178c6',
-      Python:     '#3572a5',
-      HTML:       '#e34c26',
-      CSS:        '#563d7c',
-      Shell:      '#89e051',
-      Go:         '#00add8',
-      Rust:       '#dea584',
-      C:          '#555555',
-      'C++':      '#f34b7d',
-      Ruby:       '#701516',
-      Java:       '#b07219',
-    };
-
-    async function loadRepos() {
-      const loading = document.getElementById('loading');
-      const list    = document.getElementById('repo-list');
-      const error   = document.getElementById('error');
-
-      try {
-        const res = await fetch(
-          `https://api.github.com/users/${USERNAME}/repos?type=public&sort=updated&per_page=100`
-        );
-        if (!res.ok) throw new Error(`API error: ${res.status} ${res.statusText}`);
-
-        const repos = await res.json();
-        const filtered = repos.filter(r => r.name !== `${USERNAME}.github.io` && !r.fork);
-
-        if (filtered.length === 0) {
-          loading.textContent = 'No public repositories yet.';
-          return;
-        }
-
-        filtered.forEach(repo => {
-          const li = document.createElement('li');
-          li.className = 'repo-item';
-
-          const a = document.createElement('a');
-          a.href = repo.html_url;
-          a.target = '_blank';
-          a.rel = 'noopener noreferrer';
-          a.textContent = repo.name;
-          li.appendChild(a);
-
-          if (repo.description) {
-            const p = document.createElement('p');
-            p.className = 'repo-desc';
-            p.textContent = repo.description;
-            li.appendChild(p);
-          }
-
-          if (repo.language) {
-            const color = LANG_COLORS[repo.language] || LANG_COLOR_FALLBACK;
-            const meta = document.createElement('div');
-            meta.className = 'repo-meta';
-
-            const dot = document.createElement('span');
-            dot.className = 'lang-dot';
-            dot.style.backgroundColor = color;
-            dot.title = repo.language;
-
-            const label = document.createElement('span');
-            label.className = 'lang-label';
-            label.textContent = repo.language;
-
-            meta.appendChild(dot);
-            meta.appendChild(label);
-            li.appendChild(meta);
-          }
-
-          list.appendChild(li);
-        });
-
-        loading.hidden = true;
-        list.hidden = false;
-      } catch (e) {
-        loading.hidden = true;
-        error.hidden = false;
-      }
-    }
-
-    loadRepos();
   </script>
 </body>
 </html>
