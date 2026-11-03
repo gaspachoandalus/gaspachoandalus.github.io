@@ -108,6 +108,43 @@
       padding: 1.25rem 1.5rem;
     }
 
+    .repo-item--preview {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 14rem;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .repo-preview {
+      width: 14rem;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background-color: #f3f4f6;
+    }
+
+    .repo-preview iframe {
+      display: block;
+      width: 1280px;
+      height: 800px;
+      border: 0;
+      transform: scale(0.175);
+      transform-origin: top left;
+      pointer-events: none;
+    }
+
+    .repo-preview img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .repo-preview--image {
+      background-color: #000;
+    }
+
     .repo-item a {
       text-decoration: none;
       color: var(--accent);
@@ -153,6 +190,17 @@
       color: var(--muted);
       font-size: 0.8rem;
     }
+
+    @media (max-width: 560px) {
+      .repo-item--preview {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1rem;
+      }
+
+      .repo-preview {
+        width: min(100%, 14rem);
+      }
+    }
   </style>
 </head>
 <body>
@@ -181,21 +229,41 @@
     <section>
       <p class="section-title">Public repositories</p>
       <ul class="repo-list">
-        <li class="repo-item">
-          <a href="https://github.com/gaspachoandalus/aoc2022" target="_blank" rel="noopener noreferrer">Advent of Code 2022</a>
-          <p class="repo-desc">Animated solutions you can try with your own puzzle input.</p>
-          <div class="repo-meta">
-            <span class="lang-dot" style="background-color:#3178c6" title="TypeScript"></span>
-            <span class="lang-label">TypeScript</span>
-            <a href="https://gaspachoandalus.github.io/aoc2022" target="_blank" rel="noopener noreferrer">Live site</a>
+        <li class="repo-item repo-item--preview">
+          <div>
+            <a href="https://github.com/gaspachoandalus/aoc2022" target="_blank" rel="noopener noreferrer">Advent of Code 2022</a>
+            <p class="repo-desc">Animated solutions you can try with your own puzzle input.</p>
+            <div class="repo-meta">
+              <span class="lang-dot" style="background-color:#3178c6" title="TypeScript"></span>
+              <span class="lang-label">TypeScript</span>
+              <a href="https://gaspachoandalus.github.io/aoc2022" target="_blank" rel="noopener noreferrer">Live site</a>
+            </div>
+          </div>
+          <div class="repo-preview" aria-hidden="true">
+            <iframe
+              src="https://gaspachoandalus.github.io/aoc2022/main.html"
+              title="Advent of Code 2022 site preview"
+              loading="lazy"
+              sandbox="allow-scripts"
+              referrerpolicy="no-referrer"
+              tabindex="-1"></iframe>
           </div>
         </li>
-        <li class="repo-item">
-          <a href="https://github.com/gaspachoandalus/flappy-bird-nn-ai" target="_blank" rel="noopener noreferrer">flappy-bird-nn-ai</a>
-          <p class="repo-desc">AI learns to play flappy bird with a basic neural network and a genetic algorithm</p>
-          <div class="repo-meta">
-            <span class="lang-dot" style="background-color:#3178c6" title="TypeScript"></span>
-            <span class="lang-label">TypeScript</span>
+        <li class="repo-item repo-item--preview">
+          <div>
+            <a href="https://github.com/gaspachoandalus/flappy-bird-nn-ai" target="_blank" rel="noopener noreferrer">flappy-bird-nn-ai</a>
+            <p class="repo-desc">AI learns to play flappy bird with a basic neural network and a genetic algorithm</p>
+            <div class="repo-meta">
+              <span class="lang-dot" style="background-color:#3178c6" title="TypeScript"></span>
+              <span class="lang-label">TypeScript</span>
+            </div>
+          </div>
+          <div class="repo-preview repo-preview--image" aria-hidden="true">
+            <img
+              src="https://raw.githubusercontent.com/gaspachoandalus/flappy-bird-nn-ai/main/screenshot.png"
+              alt=""
+              loading="lazy"
+              decoding="async" />
           </div>
         </li>
         <li class="repo-item">
